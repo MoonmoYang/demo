@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Entity
@@ -11,23 +13,29 @@ import lombok.Setter;
 public class Member {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
             @Column(name = "MEMBER_ID")
-    Long member_id;
+    private Long member_id;
 
     @Column(name = "MEMBER_LOGIN_ID")
-    String login_id;
+    private String loginId;
     @Column(name = "MEMBER_NAME")
-    String mb_name;
+    private String mbName;
     @Column(name = "MEMBER_PASSWORD")
-    String mb_pw;
+    private String mbPw;
     @Column(name = "MEMBER_EMAIL")
-    String address;
+    private String email;
     @Column(name = "MEMBER_ROLE")
-    String mb_grade;
+    private String mbGrade;
     @Column(name = "ISRT_DATE")
-    String isrt_date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date isrtDate;
     @Column(name = "UPDT_DATE")
-    String updt_date;
+    private String updtDate;
+
+    @PrePersist
+    protected void onCreate() {
+        isrtDate = new Date();
+    }
 
 }
