@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 public class MemberController {
 
@@ -16,6 +18,30 @@ public class MemberController {
 
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<String> signin(@RequestBody Member member) {
+        try {
+            Member foundMember = memberService.signin(member.getLoginId(), member.getMbPw());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body("{\"message\":\"로그인 성공\"}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body("{\"message\":\"로그인 실패: 아이디 또는 비밀번호가 일치하지 않습니다.\"}");
+        }
+    }
+
+
+    @GetMapping("/check-duplicate")
+    public ResponseEntity<?> checkDuplicateId(@RequestBody Map<String, String> payload) {
+        String id = payload.get("id");
+        boolean isDuplicate = memberService.checkForDuplicateId(id);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("{\"isDuplicate\":" + isDuplicate + "}");
     }
 
     @PostMapping("/signup")
@@ -34,5 +60,12 @@ public class MemberController {
                     .contentType(MediaType.APPLICATION_JSON)
                     .body("{\"message\":\"회원가입 실패: 서버 오류\"}");
         }
+    }
+    @GetMapping("/validate-login-id")
+    public ResponseEntity<?> validateLoginId(@RequestParam String loginId) {
+        boolean exists = memberService.doesLoginIdExist(loginId);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("{\"exists\":" + exists + "}");
     }
 }

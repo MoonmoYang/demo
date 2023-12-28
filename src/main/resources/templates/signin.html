@@ -45,6 +45,38 @@
           <input type="password" id="password" name="mbPw" required>
         <input type="submit" id="submit" value="로그인">
         </form>
+        <script>
+          document.getElementById('signInForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 기본 제출 방지
+
+            const formData = new FormData(document.getElementById('signInForm'));
+            const object = {};
+            formData.forEach((value, key) => object[key] = value);
+            const json = JSON.stringify(object);
+
+            fetch('/signin', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: json,
+            })
+                    .then(response => response.json().then(data => ({ status: response.status, body: data })))
+                    .then(result => {
+                      if (result.status === 200) {
+                        console.log('Success:', result.body.message);
+                        alert("로그인에 성공하였습니다. " + result.body.message);
+                        window.location.href = '/';
+                      } else {
+                        throw new Error("로그인에 실패하였습니다: " + result.body.message);
+                      }
+                    })
+                    .catch((error) => {
+                      console.error('Error:', error);
+                      alert(error.message);
+                    });
+          });
+        </script>
       </div>
     </div>
   </div>

@@ -28,8 +28,8 @@ public class PageController {
         };
     }
 
-    @GetMapping("/signin")
-    public String signin() {
+    @GetMapping("/signinpage")
+    public String signinpage() {
         return "signin";
     }
 

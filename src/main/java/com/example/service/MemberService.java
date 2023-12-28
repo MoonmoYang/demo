@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
+
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,12 @@ public class MemberService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    private void validateDuplicateMember(Member member) {
+        memberRepository.findByLoginId(member.getLoginId())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                });
+    }
 
     public Optional<Member> findByLoginId(String loginId){
         return memberRepository.findByLoginId(loginId);
@@ -45,14 +53,8 @@ public class MemberService {
 
 
 
-    private void validateDuplicateMember(Member member) {
-        memberRepository.findByLoginId(member.getLoginId())
-                .ifPresent(m -> {
-                    throw new IllegalStateException("이미 존재하는 회원입니다.");
-                });
-    }
 
-    public Optional<Member> login(String loginId, String password){
+    public Optional<Member> signInForm(String loginId, String password){
         Optional<Member> foundMember = findByLoginId(loginId);
         if(foundMember.isPresent()) {
             Member member = foundMember.get();
@@ -65,6 +67,28 @@ public class MemberService {
     // 회원 리스트
     public List<Member> findAll(){
         return memberRepository.findAll();
+    }
+
+    public boolean checkPassword(String mbPw, String mbPw1) {
+        return passwordEncoder.matches(mbPw, mbPw1);
+    }
+
+    public boolean checkForDuplicateId(String id) {
+        return memberRepository.findByLoginId(id).isPresent();
+    }
+    public Member signin(String loginId, String mbPw) {
+        Optional<Member> foundMember = findByLoginId(loginId);
+        if(foundMember.isPresent()) {
+            Member member = foundMember.get();
+            if(passwordEncoder.matches(mbPw, member.getMbPw())) {
+                return member;
+            }
+        }
+        throw new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.");
+    }
+
+    public boolean doesLoginIdExist(String loginId) {
+        return memberRepository.findByLoginId(loginId).isPresent();
     }
 }
 
