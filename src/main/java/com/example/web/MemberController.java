@@ -35,7 +35,7 @@ public class MemberController {
     }
 
 
-    @GetMapping("/check-duplicate")
+    @PostMapping("/check-duplicate")
     public ResponseEntity<?> checkDuplicateId(@RequestBody Map<String, String> payload) {
         String id = payload.get("id");
         boolean isDuplicate = memberService.checkForDuplicateId(id);

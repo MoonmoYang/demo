@@ -76,6 +76,7 @@ public class MemberService {
     public boolean checkForDuplicateId(String id) {
         return memberRepository.findByLoginId(id).isPresent();
     }
+
     public Member signin(String loginId, String mbPw) {
         Optional<Member> foundMember = findByLoginId(loginId);
         if(foundMember.isPresent()) {
