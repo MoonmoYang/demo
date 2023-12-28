@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PageController {
 
     @GetMapping("/")
-    public String home(){
+    public String home() {
         return "index";
     }
 
     @GetMapping("/page")
-    public String page(@RequestParam String page){
+    public String page(@RequestParam String page) {
         return switch (page) {
             case "about" -> "about";
             case "services" -> "services";
@@ -25,11 +25,12 @@ public class PageController {
             case "signup" -> "signup";
             case "chat" -> "chat/chatindex.html";
             default -> "error"; // 잘못된 요청에 대한 기본 페이지
-
-
-
-
         };
+    }
+
+    @GetMapping("/signin")
+    public String signin() {
+        return "signin";
     }
 
 }

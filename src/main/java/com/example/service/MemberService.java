@@ -43,6 +43,15 @@ public class MemberService {
 
 
 
+
+
+    private void validateDuplicateMember(Member member) {
+        memberRepository.findByLoginId(member.getLoginId())
+                .ifPresent(m -> {
+                    throw new IllegalStateException("이미 존재하는 회원입니다.");
+                });
+    }
+
     public Optional<Member> login(String loginId, String password){
         Optional<Member> foundMember = findByLoginId(loginId);
         if(foundMember.isPresent()) {
@@ -53,15 +62,6 @@ public class MemberService {
         }
         return Optional.empty();
     }
-
-
-    private void validateDuplicateMember(Member member) {
-        memberRepository.findByLoginId(member.getLoginId())
-                .ifPresent(m -> {
-                    throw new IllegalStateException("이미 존재하는 회원입니다.");
-                });
-    }
-
     // 회원 리스트
     public List<Member> findAll(){
         return memberRepository.findAll();
