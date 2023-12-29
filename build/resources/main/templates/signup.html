@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <title>회원가입</title>
   <link rel="stylesheet" href="css/signupstyle.css">
-
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+  <!-- partial -->
+  <!--<script src="js/signupscript.js"></script>-->
 </head>
+
 <body>
 <!-- partial:index.partial.html -->
 <div class="page">
@@ -39,7 +42,7 @@
       </svg>
 
       <div class="form">
-        <form id="signupForm">
+        <div id="signupForm">
           <label for="loginId">아이디</label>
           <div>
           <div id="idCheckResult">
@@ -52,66 +55,69 @@
             <input type="email" id="email" name="email" required>
             <label for="name">이름</label>
             <input type="text" id="name" name="mbName" required>
-            <input type="submit" value="회원가입">
+            <div  id="submit"> 회원가입
+            </div>
           </div>
-        </form>
+        </div>
 
       </div>
     </div>
   </div>
-  <script>$(document).ready(function() {
-    $('#signupForm').on('submit', function(e) {
-      e.preventDefault();
-
-      var loginId = $('#loginId').val();
-      var mbPw = $('#mbPw').val();
-      var email = $('#email').val();
-      var mbName = $('#name').val();
-
-      if (!/^[A-Za-z0-9]{6,12}$/.test(loginId)) {
-        alert("아이디는 6-12자의 알파벳과 숫자여야 합니다.");
-        return false;
-      }
-      if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(mbPw)) {
-        alert("비밀번호는 최소 8자, 하나 이상의 숫자와 특수 문자를 포함해야 합니다.");
-        return false;
-      }
-      if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
-        alert("유효한 이메일 주소를 입력해주세요.");
-        return false;
-      }
-      if (!/^[A-Za-z가-힣]{2,30}$/.test(mbName)) {
-        alert("이름은 2-30자의 문자여야 합니다.");
-        return false;
-      }
-
-      var formData = {
-        loginId: loginId,
-        mbPw: mbPw,
-        email: email,
-        mbName: mbName
-      };
-
-      $.ajax({
-        url: '/signup',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(formData),
-        success: function(data) {
-          alert(data.message || "회원가입이 완료되었습니다. 로그인 해주세요.");
-          window.location.href = '/signinpage';
-          },
-        error: function(error) {
-          console.error('Error:', error);
-          var errorMsg = error.responseJSON?.message || error.responseText;
-          alert("회원가입에 실패하였습니다. " + errorMsg);
-        }
-      });
-    });
-  });
-  </script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
 <script>
+  $(function(){
+    init();
+  })
+
+  function init(){
+  }
+      $('#submit').click(function (){
+        console.log('signupForm start')
+        var loginId = $('#loginId').val();
+        var mbPw = $('#mbPw').val();
+        var email = $('#email').val();
+        var mbName = $('#name').val();
+
+        /*      if (!/^[A-Za-z0-9]{6,12}$/.test(loginId)) {
+                alert("아이디는 6-12자의 알파벳과 숫자여야 합니다.");
+                return false;
+              }
+              if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(mbPw)) {
+                alert("비밀번호는 최소 8자, 하나 이상의 숫자와 특수 문자를 포함해야 합니다.");
+                return false;
+              }
+              if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
+                alert("유효한 이메일 주소를 입력해주세요.");
+                return false;
+              }
+              if (!/^[A-Za-z가-힣]{2,30}$/.test(mbName)) {
+                alert("이름은 2-30자의 문자여야 합니다.");
+                return false;
+              }*/
+
+        var formData = {
+          loginId: loginId,
+          mbPw: mbPw,
+          email: email,
+          mbName: mbName
+        };
+
+        $.ajax({
+          url: '/signup',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(formData),
+          success: function(data) {
+            alert(data.message || "회원가입이 완료되었습니다. 로그인 해주세요.");
+            window.location.href = '/signinpage';
+          },
+          error: function(error) {
+            console.error('Error:', error);
+            var errorMsg = error.responseJSON?.message || error.responseText;
+            alert("회원가입에 실패하였습니다. " + errorMsg);
+          }
+        });
+      })
+
       $('#checkDuplicateId').on('click', function() {
         var loginId = $('#loginId').val();
         if(loginId) {
@@ -136,7 +142,6 @@
   </script>
       </div>
 
-<!-- partial -->
-<script src="js/signupscript.js"></script>
+
 </body>
 </html>

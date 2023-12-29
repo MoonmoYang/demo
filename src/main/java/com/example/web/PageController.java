@@ -2,6 +2,8 @@ package com.example.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -23,12 +25,11 @@ public class PageController {
             case "come" -> "come";
             case "signin" -> "signin";
             case "signup" -> "signup";
-            case "chat" -> "chat/chatindex.html";
             default -> "error"; // 잘못된 요청에 대한 기본 페이지
         };
     }
 
-    @GetMapping("/signinpage")
+    @RequestMapping("/signinpage")
     public String signinpage() {
         return "signin";
     }
