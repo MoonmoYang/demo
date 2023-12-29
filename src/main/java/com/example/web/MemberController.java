@@ -35,14 +35,14 @@ public class MemberController {
     }
 
 
-    @PostMapping("/check-duplicate")
-    public ResponseEntity<?> checkDuplicateId(@RequestBody Map<String, String> payload) {
-        String id = payload.get("id");
-        boolean isDuplicate = memberService.checkForDuplicateId(id);
+    @GetMapping("/check-duplicate")
+    public ResponseEntity<?> checkDuplicateId(@RequestParam("loginId") String loginId) {
+        boolean isDuplicate = memberService.checkForDuplicateId(loginId);
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body("{\"isDuplicate\":" + isDuplicate + "}");
     }
+
 
     @PostMapping("/signup")
     public ResponseEntity<String> registerUser(@RequestBody Member newMember) {
@@ -61,7 +61,7 @@ public class MemberController {
                     .body("{\"message\":\"회원가입 실패: 서버 오류\"}");
         }
     }
-    @GetMapping("/validate-login-id")
+    @PostMapping("/validate-login-id")
     public ResponseEntity<?> validateLoginId(@RequestParam String loginId) {
         boolean exists = memberService.doesLoginIdExist(loginId);
         return ResponseEntity.ok()

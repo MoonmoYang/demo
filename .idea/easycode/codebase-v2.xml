@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/src/main/java/com/example/domain/Member.java;C:/NCS/intellij_SB/demo/src/main/java/com/example/repository/MemberRepository.java;C:/NCS/intellij_SB/demo/src/main/java/com/example/repository/MemoryMemberRepository.java;C:/NCS/intellij_SB/demo/src/main/java/com/example/service/MemberService.java;C:/NCS/intellij_SB/demo/src/main/java/com/example/web/PageController.java;C:/NCS/intellij_SB/demo/src/main/java/com/example/DemoApplication.java;C:/NCS/intellij_SB/demo/src/main/java/com/example/ServletInitializer.java;C:/NCS/intellij_SB/demo/src/main/resources/static/js/scripts.js;C:/NCS/intellij_SB/demo/src/main/resources/templates/about.html;C:/NCS/intellij_SB/demo/src/main/resources/templates/contact.html;C:/NCS/intellij_SB/demo/src/main/resources/templates/index.html;C:/NCS/intellij_SB/demo/src/main/resources/templates/products.html;C:/NCS/intellij_SB/demo/src/main/resources/templates/services.html;C:/NCS/intellij_SB/demo/src/test/java/com/example/demo/DemoApplicationTests.java" />
+  </component>
+</project>
