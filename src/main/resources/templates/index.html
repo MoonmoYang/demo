@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>건영창호</title>
+        <title>Goott luxury</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
         <!-- Bootstrap Icons-->
@@ -17,70 +17,167 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/styles.css" rel="stylesheet" />
+
+
+        <style>
+
+
+            body{
+
+                height: 3940px;
+
+
+            }
+
+            span{
+                margin-bottom: 10%;
+                text-align: center;
+                opacity: 0;
+                transition: all 0.4s;
+
+
+            }
+
+            #photo1{
+
+                background-image: url(https://media.triple.guide/triple-cms/c_limit,f_auto,h_2048,w_2048/27ec1068-d368-419e-9dd7-ddd9cae73fd9.jpeg);
+                background-repeat : no-repeat;
+                background-size : cover;
+            }
+
+            #photo2{
+
+                background-image: url(/assets/img/003.png);
+                background-repeat : no-repeat;
+                /*background-size : cover;*/
+
+            }
+
+
+            figure {transition: opacity 0.4s; position: relative; margin: 0; max-width: 100%}
+
+            figure img {width: 100%}
+
+            figure figcaption {color: #fff;bottom: 270px; opacity: 0;position: absolute; text-align: center; width: 100%;transition: all .3s ease;}
+
+            figure #gallery-img {opacity: 0.95;transition: all 0.3s ease 0s;overflow: hidden}
+
+            figure:hover #gallery-img {background-color: #000}
+
+            figure:hover img {transform: scale(1.1, 1.1);transition: all .3s ease;opacity: 0.5;cursor: url("https://hcode.b-cdn.net/wp-content/themes/h-code/assets/images/icon-zoom-white.png"), pointer}
+
+            figure:hover figcaption {opacity: 1;transition: all .3s ease; }
+
+
+
+        </style>
+
+
+
+
+
+
     </head>
     <body id="page-top">
+
+<!--    카카오톡 채팅 버튼-->
+
+    <a id="chat-channel-button" href="http://pf.kakao.com/_xgBxcwG/chat" onclick="window.open(this.href, '_blank', 'width=400, height=700'); return false;">
+        <img id="ad2" src="../assets/img/채팅(채팅있음).png" alt="카카오톡 채팅버튼" width="250" heigt="120">
+    </a>
+    <a id="ad3" href="http://pf.kakao.com/_xgBxcwG/chat"  onclick="window.open(this.href, '_blank', 'width=400, height=700'); return false;"><b>채팅 상담</b></a>
+
+
+    <nav>
+    <div  class="align-items-center justify-content-center text-center" style="margin-top: 150px; margin-bottom: 100px">
+  <span >
+<!--      <div id="typing-demo">-->
+      <div id="typing" class="align-items-center justify-content-center text-center" style="margin: 0px auto">
+       <img src="../assets/img/구트_noneinv.png"><br>
+<!--      </div>-->
+          </div>
+      <div id="typing2" style="margin: 0px auto">
+      <h1 style="font-size: xxx-large; text-shadow:0px 0px 3px #009CFF;">
+    GOOTT's final gift to you
+
+      </h1>
+ </div>
+
+
+
+
+
+
+
+</span>
+    </div>
+
+
+
+</nav>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" th:href="@{/}">건영창호</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+                <a class="navbar-brand" th:href="@{/}">GOOTT</a>
+
+                    <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/page(page='membersearch')}">Member</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/page(page='about')}">About</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/page(page='services')}">Services</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/page(page='products')}">Products</a></li>
                         <li class="nav-item"><a class="nav-link" th:href="@{/page(page='contact')}">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal" data-bs-whatever="@mdo">Sign in</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal2" data-bs-whatever="@sign up">Sign up</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/page(page='signin')}">Sign in</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/page(page='signup')}">Sign up</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Log In</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Id:</label>
-                                <input type="text" class="form-control" id="recipient-name">
-                            </div>
-                            <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Password:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Log In</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
+
         <!-- Masthead-->
-        <header class="masthead1">
-            <div class="container px-4 px-lg-5 h-100">
-                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-                    <div class="col-lg-8 align-self-end">
-                        <h1 class="text-white font-weight-bold">건영은 다릅니다</h1>
-                        <hr class="divider" />
+        <header class="masthead1" style="width: 100%; height: 1280px; padding-right: 0%">
+            <div class="container px-4 px-lg-5 h-100" style="max-width: 1980px" >
+                <div class="row gx-4 gx-lg-5 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end" style="margin-bottom: 5%">
+                        <span>
+
+
+
+
+                             <figure>
+
+                            <div  id="gallery-img" class="rounded mx-auto d-block"><img src="../assets/img/model2.png" style="width: auto; height: 1100px;" id="img1"></div>
+
+                            <figcaption>
+
+                                <h3>Goat Back 20,000 won</h3>
+
+                                <p>designer : hyunchang Woo</p>
+
+                            </figcaption>
+                        </figure>
+
+
+
+
+
+<!--                        <img src="../assets/img/model2.png" class="rounded mx-auto d-block" alt="..." style="width: auto; height: 1100px;" id="img1">-->
+<!--                            <p>Goat Back 20,000 won</p>-->
+
+                        </span>
+                      
                     </div>
+
                     <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 mb-5">시스템 창호의 명가 건영창호</p>
 
 
 
-
-
-                        <a class="btn btn-primary btn-xl" th:href="@{/page(page='about')}" id="prod_list">둘 러 보 기</a>
 
 
 
@@ -90,6 +187,120 @@
                 </div>
             </div>
         </header>
+
+<!--사진2-->
+<div class="container text-center" style=" align-items: center; align-self: center; margin-left: auto; margin-right: auto;">
+    <div class="row" style=" width: 100%; height: 2200px"  >
+
+        <div class="row-cols-xxl-auto" >
+<span>
+            <img src="../assets/img/0032.png" style="width: 860px; height:1100px; overflow: hidden;" id="img2">
+
+    </span>
+        </div>
+
+        <div class="row-cols-xxl-auto">
+            <span>
+            <img src="../assets/img/0031.png" style="width: 860px; height:1100px; overflow: hidden;" id="img3">
+                </span>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+<br>
+<br>
+<span style="white-space: nowrap;">
+<p style="text-align: center; font-family: 휴먼아미체; font-size: x-large">하이라이트</p>
+</span>
+<br>
+<br>
+
+<!--사진1-->
+<div class="container text-center" style="border: 1px dashed rgba(192, 192, 192, 0.7); height: 1100px;">
+    <div class="row">
+        <div class="col">
+            <span>
+            <img src="../assets/img/model3.png">
+        </span>
+        </div>
+        <div class="col" style="vertical-align: center; margin-top: 450px; ">
+            <br>
+            <span>
+            <p style="vertical-align: center; text-align: center; align-self: center; font-size: xxx-large">구트 기프트 기빙 컬렉션</p><br>
+            <p style="vertical-align: center; text-align: center">크리에이티브 디렉터 사바토 데 사르노가 구상한 감성 충만하며 꾸밈없는 만남을 중점적으로 그려내는 구트의 홀리데이 캠페인.</p>
+            <p style="vertical-align: center; text-align: center">Goott luxury 에서 만나보세요.</p>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+
+<!--스무스 스크롤링 & 점멸 점등 효과-->
+<script>
+
+
+    let observer = new IntersectionObserver((e)=>{
+        e.forEach((box)=>{
+
+            if(box.isIntersecting){
+                box.target.style.opacity = 1;
+                box.target.style.transform = 'rotate(0deg)';
+
+            }
+        })
+    })
+
+    let span = document.querySelectorAll('span')
+    observer.observe(span[0])
+    observer.observe(span[1])
+    observer.observe(span[2])
+    observer.observe(span[3])
+    observer.observe(span[4])
+    observer.observe(span[5])
+    observer.observe(span[6])
+    observer.observe(span[7])
+
+
+
+</script>
+
+
+<!--카카오톡-->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+        integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx"
+        crossorigin="anonymous">
+
+</script>
+<script>
+
+
+
+
+</script>
+<script>
+    Kakao.init('959f37c747526970e429e77e5e94a531'); // 사용하려는 앱의 JavaScript 키 입력
+</script>
+<script>
+    function chatChannel() {
+        Kakao.Channel.chat({
+            channelPublicId: '_xgBxcwG'// 카카오 채널 이름
+        });
+    }
+
+
+</script>
+
+
+
+
+
+
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- SimpleLightbox plugin JS-->

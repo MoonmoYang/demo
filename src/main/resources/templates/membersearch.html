@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <title>전체 유저 조회</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+<h1>전체 유저 목록</h1>
+<table id="usersTable" class="table">
+    <thead>
+    <tr>
+        <th>로그인 ID</th>
+        <th>이름</th>
+        <th>이메일</th>
+        <th>역할</th>
+        <th>가입일</th>
+        <th>수정 / 삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${members}">
+        <td th:text="${member.loginId}">user01</td>
+        <td th:text="${member.mbName}">홍길동</td>
+        <td th:text="${member.email}">user01@example.com</td>
+        <td th:text="${member.mbGrade}">USER</td>
+        <td th:text="${member.isrtDate}">2020-01-01</td>
+        <td>수정 | 삭제</td>
+    </tr>
+    </tbody>
+</table>
+<script>
+
+    fetch('http://localhost:8005/api/members/all', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const tableBody = document.querySelector('#usersTable tbody');
+            data.forEach(member => {
+                const formattedDate = member.isrtDate.slice(0, 10);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+            <td>${member.loginId}</td>
+            <td>${member.mbName}</td>
+            <td>${member.email}</td>
+            <td>${member.mbGrade}</td>
+            <td>${formattedDate}</td>
+            <td><button class="btn btn-primary btn-sm" onclick="editMember('${member.loginId}')">수정</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteMember('${member.loginId}')">삭제</button>
+            </td>
+              </td>
+        `;
+                tableBody.appendChild(tr);
+            });
+        })
+        .catch(error => {
+            console.error('Fetching error:', error);
+        });
+    function editMember(loginId) {
+        console.log('Edit Member loginId:', loginId);
+        fetch(`http://localhost:8005/api/members/getByLoginId/${encodeURIComponent(loginId)}`)
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`Failed to fetch member data: ${response.status} ${response.statusText}`);
+                }
+            })
+            .then(memberData => {
+
+                const queryParams = new URLSearchParams({
+                    loginId: memberData.loginId,
+                    mbName: memberData.mbName,
+                    email: memberData.email,
+                    mbGrade: memberData.mbGrade,
+                    mbPw: memberData.mbPw
+
+
+                }).toString();
+
+                window.location.href = `userupdate?${queryParams}`;  // Redirect to userupdate.html with the user data
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message);
+            });
+    }
+
+
+    // 삭제 버튼 클릭 이벤트 처리
+    function deleteMember(loginId) {
+        console.log('Delete Member loginId:', loginId);
+        if(confirm('이 회원을 삭제하시겠습니까?')) {
+            fetch(`http://localhost:8005/api/members/deleteByLoginId/${(loginId)}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => {
+                    if(response.ok) {
+                        alert('Member deleted successfully');
+                        location.reload();
+                    } else {
+                        response.json().then(data => {
+                            throw new Error(data.message || 'Delete failed');
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+</script>
+</body>
+</html>

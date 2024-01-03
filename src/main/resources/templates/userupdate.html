@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
+</head>
+<body>
+<h2>회원 정보 수정</h2>
+
+<div>
+    <label for="loginId">Login ID:</label>
+    <input type="text" id="loginId" name="loginId" readonly>
+</div>
+
+<form id="updateForm">
+    <div>
+        <label for="mbName">Name:</label>
+        <input type="text" id="mbName" name="mbName">
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    </div>
+    <div>
+        <label for="mbGrade">Grade:</label>
+        <input type="text" id="mbGrade" name="mbGrade">
+    </div>
+    <div>
+        <label for="mbPw">mbPw:</label>
+        <input type="password" id="mbPw" name="mbPw">
+
+    </div>
+    <button type="button" onclick="submitUpdate()">정보 수정</button>
+</form>
+
+<script>
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    function populateFormData(memberData) {
+        document.getElementById('loginId').value = memberData.loginId || '';
+        document.getElementById('mbName').value = memberData.mbName || '';
+        document.getElementById('email').value = memberData.email || '';
+        document.getElementById('mbGrade').value = memberData.mbGrade || '';
+        document.getElementById('mbPw').value = memberData.mbPw || '';
+
+        // Populate other fields as necessary
+    }
+
+    const loginId = getParameterByName('loginId'); // Get loginId from URL parameter
+    if (loginId) {
+        document.getElementById('loginId').value = loginId; // Set loginId field
+        // Fetch user data and populate form
+        fetch(`http://localhost:8005/api/members/getByLoginId/${encodeURIComponent(loginId)}`)
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Failed to fetch member data');
+                }
+            })
+            .then(memberData => {
+                populateFormData(memberData); // Populate form with fetched data
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message);
+            });
+    } else {
+        console.error('No loginId provided.');
+        alert('No loginId provided.');
+    }
+
+    function submitUpdate() {
+        const loginId = document.getElementById('loginId').value; // Get the loginId from the form
+        const formData = {
+            mbName: document.getElementById('mbName').value,
+            email: document.getElementById('email').value,
+            mbGrade: document.getElementById('mbGrade').value,
+            mbPw: document.getElementById('mbPw').value
+            // Add other form fields as necessary
+        };
+
+        // Construct the request to the server
+        fetch(`http://localhost:8005/api/members/updateByLoginId/${encodeURIComponent(loginId)}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json', // Indicate that you're sending JSON data
+            },
+            body: JSON.stringify(formData) // Convert the formData object to a JSON string
+        })
+            .then(response => {
+                if(response.ok) {
+                    return response.json();  // or response.text() if the server sends a plain text response
+                } else {
+                    throw new Error(`Update failed: ${response.status} ${response.statusText}`);
+                }
+            })
+            .then(data => {
+                console.log('Success:', data);  // Handle the success case
+                alert('회원 정보가 성공적으로 수정되었습니다.');
+
+            })
+            .catch(error => {
+                console.error('Error:', error);  // Handle any errors that occurred during the fetch
+                alert(error.message);
+            });
+    }
+
+</script>
+
+</body>
+</html>

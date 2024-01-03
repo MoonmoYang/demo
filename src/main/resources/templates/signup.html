@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <link rel="stylesheet" href="css/signupstyle.css">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+  <!-- partial -->
+  <!--<script src="js/signupscript.js"></script>-->
+</head>
+
+<body>
+<!-- partial:index.partial.html -->
+<div class="page">
+  <div class="container">
+    <div class="left">
+      <div class="login">회원가입</div>
+      <div class="eula"></div>
+    </div>
+    <div class="right">
+      <svg viewBox="0 0 320 480">
+        <defs>
+          <linearGradient>
+                  inkscape:collect="always"
+                  id="linearGradient"
+                  x1="13"
+                  y1="193.49992"
+                  x2="307"
+                  y2="193.49992"
+                  gradientUnits="userSpaceOnUse">
+            <stop
+                    style="stop-color:#ff00ff;"
+                    offset="0"
+                    id="stop876" />
+            <stop
+                    style="stop-color:#ff0000;"
+                    offset="1"
+                    id="stop878" />
+          </linearGradient>
+        </defs>
+        <path d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 239.99984 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25"/>
+      </svg>
+
+      <div class="form">
+        <div id="signupForm">
+          <label for="loginId">아이디</label>
+          <div>
+          <div id="idCheckResult">
+            <input type="text" id="loginId" name="loginId" required>
+            <button type="button" id="checkDuplicateId">중복 체크</button>
+             </div>
+            <label for="mbPw">비밀번호</label>
+            <input type="password" id="mbPw" name="mbPw" required>
+            <label for="email">메일주소</label>
+            <input type="email" id="email" name="email" required>
+            <label for="name">이름</label>
+            <input type="text" id="name" name="mbName" required>
+            <div  id="submit"> 회원가입
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<script>
+  $(function(){
+    init();
+  })
+
+  function init(){
+  }
+      $('#submit').click(function (){
+        console.log('signupForm start')
+        var loginId = $('#loginId').val();
+        var mbPw = $('#mbPw').val();
+        var email = $('#email').val();
+        var mbName = $('#name').val();
+
+              if (!/^[A-Za-z0-9]{6,12}$/.test(loginId)) {
+                alert("아이디는 6-12자의 알파벳과 숫자여야 합니다.");
+                return false;
+              }
+              if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(mbPw)) {
+                alert("비밀번호는 최소 8자, 하나 이상의 숫자와 특수 문자를 포함해야 합니다.");
+                return false;
+              }
+              if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
+                alert("유효한 이메일 주소를 입력해주세요.");
+                return false;
+              }
+              if (!/^[A-Za-z가-힣]{2,30}$/.test(mbName)) {
+                alert("이름은 2-30자의 문자여야 합니다.");
+                return false;
+              }
+
+        var formData = {
+          loginId: loginId,
+          mbPw: mbPw,
+          email: email,
+          mbName: mbName
+        };
+
+        $.ajax({
+          url: '/signup',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(formData),
+          success: function(data) {
+            alert(data.message || "회원가입이 완료되었습니다. 로그인 해주세요.");
+            window.location.href = '/signinpage';
+          },
+          error: function(error) {
+            console.error('Error:', error);
+            var errorMsg = error.responseJSON?.message || error.responseText;
+            alert("회원가입에 실패하였습니다. " + errorMsg);
+          }
+        });
+      })
+
+      $('#checkDuplicateId').on('click', function() {
+        var loginId = $('#loginId').val();
+        if(loginId) {
+          $.ajax({
+            url: '/check-duplicate?loginId=' + encodeURIComponent(loginId),
+            type: 'GET',
+            success: function(data) {
+                if(data.isDuplicate) {
+                    alert("중복된 아이디입니다.");
+                } else {
+                    alert("사용 가능한 아이디입니다.");
+                }
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+          });
+        } else {
+          alert("아이디를 입력해주세요.");
+        }
+        });
+  </script>
+      </div>
+
+
+</body>
+</html>
