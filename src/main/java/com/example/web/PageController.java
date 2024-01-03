@@ -25,6 +25,7 @@ public class PageController {
             case "come" -> "come";
             case "signin" -> "signin";
             case "signup" -> "signup";
+            case "admin" -> "admin/index";
             default -> "error"; // 잘못된 요청에 대한 기본 페이지
         };
     }
