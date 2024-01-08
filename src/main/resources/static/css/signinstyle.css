@@ -15,13 +15,15 @@ body {
   padding: 20px;
 }
 .page {
-  background: #e2e2e5;
+
   display: flex;
   flex-direction: column;
   height: calc(100% - 40px);
   position: absolute;
   place-content: center;
   width: calc(100% - 40px);
+  background-image: url(../assets/img/배경2.png);
+  background-size: cover;
 }
 @media (max-width: 767px) {
   .page {
@@ -49,6 +51,7 @@ body {
   top: 20px;
   position: relative;
   width: 50%;
+  border-radius: 1100px 0px 0px 0px;
 }
 @media (max-width: 767px) {
   .left {
@@ -70,7 +73,8 @@ body {
   margin: 40px;
 }
 .right {
-  background: #474A59;
+  border-right: #f2f2f2 solid 3px;
+  background: rgba(10, 10, 10, 0.9);
   box-shadow: 0px 0px 40px 16px rgba(0,0,0,0.22);
   color: #F1F1F2;
   position: relative;
@@ -129,4 +133,27 @@ input::-moz-focus-inner {
 }
 #submit:active {
   color: #d0d0d2;
+}
+
+input{
+  background-color: beige;
+  color: black;
+
+}
+
+.my-input {
+
+}
+
+.my-input:focus {
+  animation: round 1s forwards;
+}
+
+@keyframes round {
+  from {
+    border-radius: 0;
+  }
+  to {
+    border-radius: 30px;
+  }
 }
