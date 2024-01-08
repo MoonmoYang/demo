@@ -103,6 +103,36 @@
                     });
           });
         </script>
+        <script>
+          Kakao.init('19e9482fb50f59f4b087a41c44e1d00f');
+        </script>
+        <button id="kakao-login-btn" class="btn btn-outline-light btn-lg h-75">카카오톡 로그인</button>
+        <script>
+          document.getElementById('kakao-login-btn').addEventListener('click', function() {
+            Kakao.Auth.login({
+              success: function(authObj) {
+                // 로그인 성공 시, 사용자 정보 요청
+                Kakao.API.request({
+                  url: '/v2/user/me',
+                  success: function(res) {
+                    // 여기서 일반적으로 사용자 정보를 서버로 보냅니다.
+                    console.log(JSON.stringify(res));
+                    alert('로그인에 성공하였습니다.');
+                    window.location.href = '/'; // 홈페이지나 대시보드로 리다이렉션
+                  },
+                  fail: function(error) {
+                    alert(JSON.stringify(error));
+                  },
+                });
+              },
+              fail: function(err) {
+                alert(JSON.stringify(err));
+              },
+            });
+          });
+        </script>
+
+
       </div>
     </div>
   </div>
